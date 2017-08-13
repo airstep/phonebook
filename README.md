@@ -1,4 +1,5 @@
 # Hi!
+
 So, this is just simple demo app - Phonebook.
 
 You can generate new contacts just in one press on 'generate' or 'here' words.
@@ -15,11 +16,29 @@ Also you can delete any contact - just press on item and drag it to the left dir
 
 By the way, any new created contact will be placed at the top of contact list.
 
-How to use this
+How to use this?
 
-- Server side
+## Server side
 
-Just run step by step such commands:
+Install MongoDB like in [ArchLinux](https://wiki.archlinux.org/index.php/MongoDB) or [Ubuntu](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/) articles
+
+Run service, then:
+
+```bash
+$ mongo
+```
+
+Create new user:
+
+db.createUser(
+   {
+     user: "test",
+     pwd: "testme",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+
+After that just run step by step such commands:
 ```bash
 $ cd server
 
@@ -34,7 +53,7 @@ if you wish just to run tests, then press Ctrl+C (to stop server) and run:
 $ npm test
 ```
 
-- Client side
+## Client side
 
 Install ionic
 
