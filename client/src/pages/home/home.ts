@@ -9,8 +9,8 @@ import { API } from "../../services/api";
   providers: [API]
 })
 export class HomePage implements OnInit {
-  
-  contacts;
+
+  private contacts: any[];
 
   constructor(
     public navCtrl: NavController,
@@ -22,8 +22,8 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.refresh();
-  }  
-  
+  }
+
   refresh() {
     this.api.getContacts().then(values => {
       this.contacts = values;
@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   async generate() {
     let users = await this.api.generateRandomUsers(10);
     users.forEach((user => {
-        this.addContact(user)
+      this.addContact(user);
     }).bind(this));
   }
 
@@ -50,10 +50,10 @@ export class HomePage implements OnInit {
     this.refresh();
   }
 
-  async generateContact() { 
-    let user = await this.api.generateRandomUser();    
-    this.addContact(user)
-  } 
+  async generateContact() {
+    let user = await this.api.generateRandomUser();
+    this.addContact(user);
+  }
 
   async removeContact(c) {
     await this.api.removeContact(c);
@@ -71,6 +71,6 @@ export class HomePage implements OnInit {
   }
 
   toUp(s) {
-    return s.replace(/\b\w/g, l => l.toUpperCase())    
-  }  
+    return s.replace(/\b\w/g, l => l.toUpperCase());
+  }
 }

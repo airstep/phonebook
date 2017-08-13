@@ -9,10 +9,7 @@ import 'rxjs/add/operator/toPromise';
 export class API {
   private apiURL: string = "http://localhost:8080/contact";
 
-  constructor (
-    public http: Http
-  ) {
-  }
+  constructor(public http: Http) { }
 
   async getContacts() {
     return this.http.get(this.apiURL)
@@ -25,10 +22,10 @@ export class API {
       .map(res => res.json())
       .toPromise();
   }
-  
+
   async addContact(contact) {
     return this.http.post(this.apiURL, contact)
-      .map(res => res.json())    
+      .map(res => res.json())
       .toPromise();
   }
 
@@ -44,7 +41,7 @@ export class API {
         let result = data.json().results;
         return result;
       })
-			.catch(this.catchError)      
+      .catch(this.catchError)
       .toPromise();
   }
 
@@ -52,9 +49,9 @@ export class API {
     let users = await this.generateRandomUsers(1);
     return users[0];
   }
-  
-  catchError(error:Response){
+
+  catchError(error: Response) {
     console.log(error);
     return Observable.throw(error.json().error || 'Server error');
-  }    
+  }
 }

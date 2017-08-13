@@ -6,18 +6,25 @@ let Contact = require('../models/contact');
  */
 function getContacts(req, res) {
 	//Query the DB and if no errors, send all the contacts
-	Contact.find({}).sort({createdAt: -1}).then((err, contacts) => {
-		if(err) res.send(err);
+	Contact.find({}).sort({
+		createdAt: -1
+	}).then((err, contacts) => {
+		if (err) res.send(err);
 		//If no errors, send them back to the client
 		res.json(contacts);
 	});
 }
 
 function search(req, res) {
-    var query = req.query['q'];
+	var query = req.query['q'];
 	//Query the DB and if no errors, send all the contacts
-	Contact.find({name : { '$regex' : query, '$options' : 'i' } }, (err, contacts) => {
-		if(err) res.send(err);
+	Contact.find({
+		name: {
+			'$regex': query,
+			'$options': 'i'
+		}
+	}, (err, contacts) => {
+		if (err) res.send(err);
 		//If no errors, send them back to the client
 		res.json(contacts);
 	});
@@ -30,12 +37,14 @@ function postContact(req, res) {
 	//Creates a new contact
 	var newContact = new Contact(req.body);
 	//Save it into the DB.
-	newContact.save((err,contact) => {
-		if(err) {
+	newContact.save((err, contact) => {
+		if (err) {
 			res.send(err);
-		}
-		else { //If no errors, send it back to the client
-			res.json({message: "Contact successfully added!", contact });
+		} else { //If no errors, send it back to the client
+			res.json({
+				message: "Contact successfully added!",
+				contact
+			});
 		}
 	});
 }
@@ -45,7 +54,7 @@ function postContact(req, res) {
  */
 function getContact(req, res) {
 	Contact.findById(req.params.id, (err, contact) => {
-		if(err) res.send(err);
+		if (err) res.send(err);
 		//If no errors, send it back to the client
 		res.json(contact);
 	});
@@ -55,8 +64,13 @@ function getContact(req, res) {
  * DELETE /contact/:id to delete a contact given its id.
  */
 function deleteContact(req, res) {
-	Contact.remove({_id : req.params.id}, (err, result) => {
-		res.json({ message: "Contact successfully deleted!", result });
+	Contact.remove({
+		_id: req.params.id
+	}, (err, result) => {
+		res.json({
+			message: "Contact successfully deleted!",
+			result
+		});
 	});
 }
 
@@ -64,14 +78,26 @@ function deleteContact(req, res) {
  * PUT /contact/:id to update a contact given its id
  */
 function updateContact(req, res) {
-	Contact.findById({_id: req.params.id}, (err, contact) => {
-		if(err) res.send(err);
+	Contact.findById({
+		_id: req.params.id
+	}, (err, contact) => {
+		if (err) res.send(err);
 		Object.assign(contact, req.body).save((err, contact) => {
-			if(err) res.send(err);
-			res.json({ message: 'Contact updated!', contact });
+			if (err) res.send(err);
+			res.json({
+				message: 'Contact updated!',
+				contact
+			});
 		});
 	});
 }
 
 //export all the functions
-module.exports = { getContacts, postContact, getContact, deleteContact, updateContact, search };
+module.exports = {
+	getContacts,
+	postContact,
+	getContact,
+	deleteContact,
+	updateContact,
+	search
+};
