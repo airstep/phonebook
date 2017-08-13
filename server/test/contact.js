@@ -14,11 +14,11 @@ chai.use(chaiHttp);
 
 // our parent block
 describe('Contacts', () => {
-	beforeEach((done) => { 
+	beforeEach((done) => {
 		// before each test we empty the database
-		Contact.remove({}, (err) => { 
-		   done();		   
-		});		
+		Contact.remove({}, (err) => {
+		   done();
+		});
 	});
  /*
   * Test the /GET route
@@ -61,7 +61,7 @@ describe('Contacts', () => {
 	  		name: "Test",
 	  		address: "Test",
 				picture: "Test",
-				phone: "+555555"										
+				phone: "+555555"
 	  	}
 			chai.request(server)
 		    .post('/contact')
@@ -77,17 +77,35 @@ describe('Contacts', () => {
 		      done();
 		    });
 	  });
+	  it('it should search a contact ', (done) => {
+	  	let contact = new Contact({
+	  		name: "Test",
+	  		address: "Test",
+				picture: "Test",
+				phone: "+555555"
+			})
+	  	contact.save((err, contact) => {
+			chai.request(server)
+		    .get('/contact/search?q=T')
+		    .end((err, res) => {
+			  	res.should.have.status(200);
+                res.body.should.be.a('array');
+                res.body.length.should.be.eql(1);
+		      done();
+		    });
+        });
+      });
   });
  /*
   * Test the /GET/:id route
   */
   describe('/GET/:id contact', () => {
 	  it('it should GET a contact by the given id', (done) => {
-	  	let contact = new Contact({ 
+	  	let contact = new Contact({
 	  		name: "Test",
 	  		address: "Test",
 				picture: "Test",
-				phone: "+555555"										
+				phone: "+555555"
  		  });
 	  	contact.save((err, contact) => {
 	  		chai.request(server)
@@ -104,7 +122,7 @@ describe('Contacts', () => {
 		      done();
 		    });
 	  	});
-			
+
 	  });
   });
  /*
@@ -116,7 +134,7 @@ describe('Contacts', () => {
 	  		name: "Test",
 	  		address: "Test",
 				picture: "Test",
-				phone: "+555555"														
+				phone: "+555555"
 			})
 	  	contact.save((err, contact) => {
 				chai.request(server)
@@ -125,7 +143,7 @@ describe('Contacts', () => {
 						name: "Test",
 						address: "Test",
 						picture: "Test",
-						phone: "+7777777"																
+						phone: "+7777777"
 					})
 			    .end((err, res) => {
 				  	res.should.have.status(200);
@@ -146,7 +164,7 @@ describe('Contacts', () => {
 	  		name: "Test",
 	  		address: "Test",
 				picture: "Test",
-				phone: "+555555"														
+				phone: "+555555"
 			})
 	  	contact.save((err, contact) => {
 				chai.request(server)

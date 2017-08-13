@@ -1,9 +1,22 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar *ngIf="!searching" color="primary">
     <ion-title>
       Phonebook
     </ion-title>
+    <ion-buttons end>
+      <button ion-button class="search-button" (click)="searching = true"><ion-icon name="search"></ion-icon></button>
+    </ion-buttons>    
   </ion-navbar>
+  <ion-toolbar *ngIf="searching" color="primary">
+    <ion-searchbar
+      autofocus
+      class="seach-bar"
+      color="primary"
+      [showCancelButton]="true"
+      (ionInput)="search($event.target.value); searching = true;"
+      (ionClear)="search(undefined); searching = false;">
+      </ion-searchbar>
+  </ion-toolbar>  
 </ion-header>
 
 <ion-content>

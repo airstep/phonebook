@@ -20,6 +20,12 @@ export class API {
       .toPromise();
   }
 
+  async search(value) {
+    return this.http.get(this.apiURL + '/search?q=' + value)
+      .map(res => res.json())
+      .toPromise();
+  }
+  
   async addContact(contact) {
     return this.http.post(this.apiURL, contact)
       .map(res => res.json())    

@@ -6,7 +6,17 @@ let Contact = require('../models/contact');
  */
 function getContacts(req, res) {
 	//Query the DB and if no errors, send all the contacts
-	Contact.find({}, (err, contacts) => {
+	Contact.find({}).sort({createdAt: -1}).then((err, contacts) => {
+		if(err) res.send(err);
+		//If no errors, send them back to the client
+		res.json(contacts);
+	});
+}
+
+function search(req, res) {
+    var query = req.query['q'];
+	//Query the DB and if no errors, send all the contacts
+	Contact.find({name : { '$regex' : query, '$options' : 'i' } }, (err, contacts) => {
 		if(err) res.send(err);
 		//If no errors, send them back to the client
 		res.json(contacts);
@@ -64,4 +74,4 @@ function updateContact(req, res) {
 }
 
 //export all the functions
-module.exports = { getContacts, postContact, getContact, deleteContact, updateContact };
+module.exports = { getContacts, postContact, getContact, deleteContact, updateContact, search };

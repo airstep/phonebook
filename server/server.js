@@ -44,6 +44,9 @@ app.route("/contact")
 	.get(contact.getContacts)
 	.post(contact.postContact);
 
+app.route("/contact/search")
+    .get(contact.search);
+
 app.route("/contact/:id")
 	.get(contact.getContact)
 	.delete(contact.deleteContact)

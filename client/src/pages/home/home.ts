@@ -60,6 +60,16 @@ export class HomePage implements OnInit {
     this.refresh();
   }
 
+  search(value) {
+    if (value) {
+      this.api.search(value).then(values => {
+        this.contacts = values;
+      })
+    } else {
+      this.refresh();
+    }
+  }
+
   toUp(s) {
     return s.replace(/\b\w/g, l => l.toUpperCase())    
   }  
